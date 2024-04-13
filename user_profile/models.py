@@ -32,9 +32,11 @@ class CustomUserManager(BaseUserManager):
         """
         Create a user with the given email, password, and other fields.
         """
+        
         if not email:
             raise ValueError('You must provide an email address')
         email = self.normalize_email(email)
+        other_fields['role'] = User.Role.ADMIN
         user = self.model(email=email, **other_fields)
         user.set_password(password)
         user.save()
@@ -49,6 +51,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         PUBLIC = 'PUBLIC', 'Public'
         EMPLOYEE = 'EMPLOYEE','Employee'
         COMPANY = 'COMPANY', 'Company'
+        ADMIN = 'ADMIN', 'Admin'
         
     email = models.EmailField(_('email address'), unique=True)
     role = models.CharField(max_length=50, choices=Role.choices, default=Role.PUBLIC)    
