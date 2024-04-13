@@ -137,10 +137,10 @@ REST_FRAMEWORK = {
     )
 }
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:3000',
-]
-
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:3000',
+# ]
+CORS_ALLOWED_ORIGINS= os.environ.get('CORS_ALLOWED_ORIGINS').split(" ")
 AUTH_USER_MODEL = 'user_profile.User'
 
 SIMPLE_JWT = {
